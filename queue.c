@@ -10,10 +10,11 @@ int rear=-1;
 int item;
 int main()
 {
+	printf("Enter your choice\n1 for Inserting an element\n2 for deleting an element\n3 for displaying all elements\n4 for exit");
 	int choice;
 	do
 	{
-		printf("Enter your choice\n1 for Inserting an element\n2 for deleting an element\n3 for displaying all elements\n4 for exit");
+		
 		scanf("%d",&choice);
 		switch(choice)
 		{
@@ -44,14 +45,20 @@ void enqueue()
 	if (rear==max-1)
 		printf("The queue is full");
 	else
-	{
-		if (front==-1)
-			front=0;
-		printf("Enter the item to be inserted");
+	{	printf("Enter the item to be inserted");
 		scanf("%d",&item);
-		
-		rear=rear+1;
-		queue[rear]=item;
+		if (front==-1)
+		{
+			front=0;
+			rear=rear+1;
+			queue[rear]=item;
+		}
+		else
+		{
+			rear=rear+1;
+			queue[rear]=item;
+		}
+			
 		
 	}
 }
@@ -61,10 +68,19 @@ void dequeue()
 	if (front==-1)
 		printf("The queue is empty");
 	else
-	{
+	{	
 		element=queue[front];
-		front=front-1;
-		printf("The item deleted is %d",element); 
+		if(front==rear)
+		{
+			front=-1;
+			rear=-1;
+			printf("The item deleted is %d",element);
+		}
+		else
+		{
+			front=front+1;
+			printf("The item deleted is %d",element);
+		}
 	}
 }
 void traversal()
@@ -74,9 +90,9 @@ void traversal()
 		printf("The queue is empty");
 	else
 	{
-		for(i=0;i<=rear;i++)
+		for(i=front;i<=rear;i++)
 		{
-			printf("%d",queue[i]);
+			printf("%d\n",queue[i]);
 		}
 	}
 }
