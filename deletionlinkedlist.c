@@ -29,6 +29,60 @@ void insertAtFront(int data)
 	}
 	
 }
+void insertAtEnd(int data)
+{
+	struct node*newnode;
+	newnode=createnode(data);
+	if (header==NULL)
+	{
+		header=newnode;
+	}
+	else
+	{
+		struct node *ptr = header;
+       		while (ptr->link != NULL) 
+	{
+            		ptr = ptr->link;
+        }
+        
+        	ptr->link = newnode;
+		
+		
+	} 
+}
+void insertAtAny(int data,int position)
+{
+	
+    	
+    
+    	struct node*newnode=createnode(data);
+    	if (position == 0) 
+	{
+        newnode->link = header;  
+        header = newnode;       
+    	} 
+	else 
+	{
+       		struct node *temp = header;
+        	int currentPos = 0;
+        	while (temp != NULL && currentPos < position - 1) 
+		{
+            	temp = temp->link;
+            	currentPos++;
+        	}
+        	if (temp == NULL) 
+		{
+            	printf("Position is out of bounds!\n");
+        	} 
+		else 
+		{
+            
+            	newnode->link = temp->link;
+            	temp->link = newnode;
+        	}
+	}
+    
+}
 void deleteAtFront(){
 	struct node *ptr;
 	
@@ -78,18 +132,27 @@ int main(){
 		switch(choice)
 		{
 			case 1:
-				enqueue();
+				insertAtFront(int data);
 				break;
 			case 2:
-				dequeue();
+				insertAtEnd(int data);
 				break;
 			case 3:
-				traversal();
+				void insertAtAny(int data,int position);
 				break;
 			case 4:
-				printf("You have exited the programme");
+				deleteAtFront();
 				break;
-
+			case 5:
+				void deleteAtEnd();
+				break;
+			case 6:
+				traversal();
+				break;
+			case 7:
+				exit;
+				break;
+			oid deleteAtEnd()
 			default:
 				printf("Wrong Choice");
 				
@@ -101,6 +164,8 @@ int main(){
 	insertAtFront(8);
 	insertAtFront(5);
 	insertAtFront(7);
+	insertAtEnd(2);
+	insertAtAny(1);
 	printf("Inserted elements are:");
 	traversal();
 	deleteAtFront();
