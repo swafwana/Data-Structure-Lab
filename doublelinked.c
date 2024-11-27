@@ -48,9 +48,11 @@ void insertAtEnd(int data)
 	{
 		newnode=create_node(data);
 		while(ptr->rlink!=NULL)
-	
+		{
+			ptr=ptr->rlink
+		}
 		ptr->rlink=newnode;
-		header->llink=ptr;
+		newnode->llink=ptr;
 	}
 }
 	
