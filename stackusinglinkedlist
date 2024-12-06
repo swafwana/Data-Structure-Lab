@@ -100,3 +100,75 @@ int main() {
 
     return 0;
 }
+Searching
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define the structure of a stack node
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Global pointer to represent the top of the stack
+struct Node* top = NULL;
+
+// Function to create a new node
+struct Node* createNode(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Push operation
+void push(int value) {
+    struct Node* newNode = createNode(value);
+    newNode->next = top;
+    top = newNode;
+    printf("Pushed %d onto the stack\n", value);
+}
+
+// Search operation
+void search(int value) {
+    struct Node* current = top; // Start from the top
+    int position = 0;          // Position tracker
+
+    // Traverse the stack
+    while (current != NULL) {
+        position++;
+        if (current->data == value) {
+            printf("Value %d found at position %d from the top.\n", value, position);
+            return;
+        }
+        current = current->next; // Move to the next node
+    }
+
+    // If the value is not found
+    printf("Value %d not found in the stack.\n", value);
+}
+
+// Display operation (for verification)
+void display() {
+    struct Node* current = top;
+    printf("Stack elements: ");
+    while (current != NULL) {
+        printf("%d ", current->data);
+        current = current->next;
+    }
+    printf("\n");
+}
+
+// Main function to demonstrate
+int main() {
+    push(10);
+    push(20);
+    push(30);
+    display();
+
+    // Search for values
+    search(20); // Should find it
+    search(40); // Should not find it
+
+    return 0;
+}
