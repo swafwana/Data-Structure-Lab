@@ -1,0 +1,113 @@
+#include <stdio.h>
+
+#define SIZE 26  // Size of the alphabet set (26 letters)
+
+// Function prototypes
+void printBitVector(unsigned int bitVector);
+unsigned int createBitVector(char set[], int size);
+unsigned int unionSet(unsigned int set1, unsigned int set2);
+unsigned int intersectionSet(unsigned int set1, unsigned int set2);
+unsigned int complementSet(unsigned int set);
+unsigned int differenceSet(unsigned int set1, unsigned int set2);
+void inputSet(char set[], int* size);
+
+int main() {
+    char set1[SIZE], set2[SIZE];
+    int size1 = 0, size2 = 0;
+
+    // Get input from the user for both sets
+    printf("Enter elements for Set 1 (use space between letters, end input with a non-letter character):\n");
+    inputSet(set1, &size1);
+
+    printf("Enter elements for Set 2 (use space between letters, end input with a non-letter character):\n");
+    inputSet(set2, &size2);
+
+    // Convert sets to bit vectors
+    unsigned int bitVector1 = createBitVector(set1, size1);
+    unsigned int bitVector2 = createBitVector(set2, size2);
+
+    int choice;
+    do {
+        // Menu for set operations
+        printf("\nChoose an operation:\n");
+        printf("1. Union of Set1 and Set2\n2. Intersection of Set1 and Set2\n3. Complement of Set1\n4. Difference (Set1 - Set2)\n5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printBitVector(unionSet(bitVector1, bitVector2));
+                break;
+            case 2:
+                printBitVector(intersectionSet(bitVector1, bitVector2));
+                break;
+            case 3:
+                printBitVector(complementSet(bitVector1));
+                break;
+            case 4:
+                printBitVector(differenceSet(bitVector1, bitVector2));
+                break;
+            case 5:
+                printf("Exiting the program.\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (choice != 5);
+
+    return 0;
+}
+
+// Function to print a bit vector
+void printBitVector(unsigned int bitVector) {
+    printf("{ ");
+    for (int i = 0; i < SIZE; i++) {
+        if (bitVector & (1 << i)) {
+            printf("%c ", 'A' + i);  // Print the corresponding letter
+        }
+    }
+    printf("}\n");
+}
+
+// Function to create a bit vector from a set of characters
+unsigned int createBitVector(char set[], int size) {
+    unsigned int bitVector = 0;
+    for (int i = 0; i < size; i++) {
+        bitVector |= (1 << (set[i] - 'A'));  // Set the bit corresponding to the letter
+    }
+    return bitVector;
+}
+
+// Function for union of two sets
+unsigned int unionSet(unsigned int set1, unsigned int set2) {
+    return set1 | set2;  // Bitwise OR to combine the sets
+}
+
+// Function for intersection of two sets
+unsigned int intersectionSet(unsigned int set1, unsigned int set2) {
+    return set1 & set2;  // Bitwise AND to find common elements
+}
+
+// Function for complement of a set
+unsigned int complementSet(unsigned int set) {
+    return ~set;  // Bitwise NOT to get the complement
+}
+
+// Function for difference (set1 - set2)
+unsigned int differenceSet(unsigned int set1, unsigned int set2) {
+    return set1 & ~set2;  // Bitwise AND with the complement of set2
+}
+
+// Function to input a set from the user
+void inputSet(char set[], int* size) {
+    char element;
+    printf("Enter characters for the set (end with a non-alphabet character):\n");
+    
+    // Read characters until a non-alphabet character is entered
+    while (scanf(" %c", &element) && (element >= 'A' && element <= 'Z')) {
+        if (*size < SIZE && element >= 'A' && element <= 'Z') {
+            set[*size] = element;
+            (*size)++;
+        }
+    }
+}
