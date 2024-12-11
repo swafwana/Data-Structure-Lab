@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <ctype.h>
+
+#define SIZE 26  // Size of the alphabet set (26 letters)
+
+// Function to print binary representation of the bit vector
+void printBitVectorBinary(unsigned int bitVector);
+
+int main() {
+    unsigned int universalSet = 0;  // Start with an empty set (all bits 0)
+    char element;
+    int numInputs;
+
+    // Ask the user how many elements they want to input
+    printf("Enter the number of elements you want to add to the universal set (max %d): ", SIZE);
+    scanf("%d", &numInputs);
+
+    if (numInputs > SIZE || numInputs <= 0) {
+        printf("Invalid number of inputs. Exiting.\n");
+        return 1;
+    }
+
+    // Input elements and set corresponding bits in the universal set
+    printf("Enter %d elements (A-Z or a-z) to add to the set:\n", numInputs);
+    for (int i = 0; i < numInputs; i++) {
+        scanf(" %c", &element);  // Read each character
+
+        // Convert to uppercase (for case insensitivity)
+        element = toupper(element);
+
+        if (element >= 'A' && element <= 'Z') {
+            // Set the corresponding bit for the letter
+            universalSet |= (1 << (element - 'A'));
+        } else {
+            printf("Invalid character '%c'. Only alphabetic characters are allowed. Skipping.\n", element);
+        }
+    }
+
+    // Print the binary representation of the universal set
+    printf("\nBinary representation of the universal set: ");
+    printBitVectorBinary(universalSet);
+
+    return 0;
+}
+
+// Function to print binary representation of the bit vector
+void printBitVectorBinary(unsigned int bitVector) {
+    for (int i = SIZE - 1; i >= 0; i--) {
+        printf("%c", (bitVector & (1 << i)) ? '1' : '0');
+    }
+    printf("\n");
+}
