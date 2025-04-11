@@ -1,0 +1,101 @@
+-- 
+-- Roll No: 58
+-- Name: SWAFWANA SHERI K P
+-- Program: Assignment - I
+-- 
+
+
+--
+-- Table structure for table books
+--
+
+create table books(accno int primary key auto_increment, title varchar(100) unique NOT NULL, author varchar(50) NOT NULL, price float(6,2), type enum('lending',
+'reference'), availability enum('Yes','No'), publisherid int);
+
+alter table books add constraint books_fkey_publisherid foreign key(publisherid) references publishers(publisherid);
+
+-- ---------create/alter statement commands----------- # This line may be removed in the actual file
+
+--
+-- Table structure for table publishers
+--
+
+create table publishers(publisherid int primary key auto_increment, name varchar(50) unique NOT NULL, address varchar(100));
+
+-- ---------create/alter statement commands----------- # This line may be removed in the actual file
+
+--
+-- Table structure for table members
+--
+
+create table members(memberid int primary key auto_increment, name varchar(50) NOT NULL, address varchar(100), type enum('staff','student'));
+
+-- ---------create/alter statement commands----------- # This line may be removed in the actual file
+
+--
+-- Table structure for table issues
+--
+
+create table issues(issueid int primary key auto_increment, memberid int, accno int, issuedate date, duedate date, foreign key(memberid) references members(memberid), foreign key(accno) references books(accno));
+
+-- ---------create/alter statement commands----------- # This line may be removed in the actual file
+
+--
+-- Table structure for table returns
+--
+
+create table returns(returnid int primary key auto_increment, memberid int, accno int, returndate date, fine int default 0 check(fine>=0), foreign key(memberid)
+references members(memberid), foreign key(accno) references books(accno));
+
+-- ---------create/alter statement commands----------- # This line may be removed in the actual file
+
+--
+-- Dumping data for table publishers
+--
+
+insert into publishers (name, address) values ('DC Books', 'Kottayam, Kerala'),('Mathrubhumi Books', 'Kozhikode, Kerala'),('Green Books', 'Thrissur, Kerala'),('Poorna Publications', 'Calicut, Kerala'),('Sahitya Pravarthaka Co-operative Society', 'Ernakulam, Kerala');
+
+-- --------insert/update statement commands----------- # This line may be removed in the actcual file
+
+--
+-- Dumping data for table books
+--
+
+insert into books (title, author, price, type, availability, publisherid) values('Randamoozham', 'M.T. Vasudevan Nair', 350.00, 'lending', 'Yes', 1),('Khasakkinte Ithihasam', 'O.V. Vijayan', 299.99, 'reference', 'No', 2),('Aarachar', 'K.R. Meera', 425.50, 'lending', 'Yes', 3),('Mayyazhippuzhayude Theerangalil', 'M. Mukundan', 275.75, 'reference', 'Yes', 4),('Balyakalasakhi', 'Vaikom Muhammad Basheer', 199.00, 'lending', 'No', 5);
+
+-- --------insert/update statement commands----------- # This line may be removed in the actcual file
+
+--
+-- Dumping data for table members
+--
+
+insert into members (name, address, type) values('Anu Joseph', 'Alappuzha, Kerala', 'student'),('Sreekumar Nair', 'Thiruvananthapuram, Kerala', 'staff'),('Lekshmi Menon', 'Kochi, Kerala', 'student'),('Vivek Das', 'Kannur, Kerala', 'staff'),('Remya Krishnan', 'Palakkad, Kerala', 'student');
+
+-- --------insert/update statement commands----------- # This line may be removed in the actcual file
+
+
+--
+-- Dumping data for table issues
+--
+
+insert into issues (memberid, accno, issuedate, duedate) values(1, 1, '2025-04-01', '2025-04-15'),(2, 3, '2025-04-02', '2025-04-16'),(3, 5, '2025-04-05', '2025-04-19'),(4, 4, '2025-04-06', '2025-04-20'),(5, 2, '2025-04-08', '2025-04-22');
+
+-- --------insert/update statement commands----------- # This line may be removed in the actcual file
+
+
+--
+-- Dumping data for table returns
+--
+
+insert into returns (memberid, accno, returndate, fine) values(1, 1, '2025-04-14', 0),(2, 3, '2025-04-20', 10),(3, 5, '2025-04-18', 0),(4, 4, '2025-04-25', 15),(5, 2, '2025-04-23', 0);
+
+-- --------insert/update statement commands----------- # This line may be removed in the actcual file
+
+
+--
+-- SQl Query Statements
+--
+
+-- -----SQL query statments preceeded by the its question-------- # This line may be removed in the actual file
+-- -----Question number should be commented---------------#This line may be removed in the actual file
+
